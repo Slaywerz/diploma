@@ -15,6 +15,6 @@
 #### для DB MySQL
 __*java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar*__
 #### для DB PostgreSQL
-__*java "-Dspring.datasource.url=jdbc:mysql://localhost:5432/app" -jar artifacts/aqa-shop.jar*__
+__*java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar*__
 ## Отчетная документация
 1. [План автоматизации тестирования](./documentation/Plan.md)
