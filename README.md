@@ -11,7 +11,9 @@
 2. Скачать данный репозиторий командой: __*git clone*__
 3. Запустить IntelliJ IDEA и открыть через неё репозиторий
 4. Запустить файл __*docker-compose.yml*__ командой: __*"docker-compose up -d"*__
-5. Запустить приложение командой java -jar artifacts/aqa-shop.jar
+5. Запустить приложение командой 
+#### для DB MySQL
+__*java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar*__
 
 ## Отчетная документация
 1. [План автоматизации тестирования](./documentation/Plan.md)
