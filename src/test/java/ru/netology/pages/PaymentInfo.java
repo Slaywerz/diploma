@@ -13,4 +13,8 @@ public class PaymentInfo {
     private final SelenideElement continueButton = Selenide.$(Selectors.byText("Продолжить"));
     private final SelenideElement errorNotification = Selenide.$(".notification_status_error");
     private final SelenideElement successNotification = Selenide.$(".notification_status_ok");
+    private final SelenideElement invalidMonthNotification = Selenide.$(Selectors.byText("Неверно указан срок действия карты"));
+    private final SelenideElement invalidYearNotification = Selenide.$(Selectors.byText("Неверно указан срок действия карты"));
+    private final SelenideElement invalidFormatNotification = Selenide.$(Selectors.byText("Неверный формат"));
+    private final SelenideElement necessarilyFieldNotification = Selenide.$(Selectors.byText("Поле обязательно для заполнения"));
 }
