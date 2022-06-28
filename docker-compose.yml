@@ -1,29 +1,29 @@
-version: '3'
+version: '3.7'
 services:
-  mysql:
-    image: library/mysql:8.0.18
+  node:
+    build: artifacts/gate-simulator
+    image: node-app:1.0
+    container_name: node
+    ports:
+      - '9999:9999'
+    command: npm start
+
+  mysqldb:
+    image: mysql:latest
     ports:
       - '3306:3306'
-    volumes:
-      - ./data_mysql:/var/lib/mysql
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_DATABASE=app
       - MYSQL_USER=app
       - MYSQL_PASSWORD=pass
-  postgres:
-    image: postgres
-    environment:
-      - POSTGRES_DB=app
-      - POSTGRES_USER=app
-      - POSTGRES_PASSWORD=pass
+
+
+  postgresdb:
+    image: postgres:latest
     ports:
       - '5432:5432'
-    volumes:
-      - ./data_postgres:/var/lib/postgres
-  node:
-    build: artifacts/gate-simulator
-    image: node:17-alpine
-    ports:
-      - '9999:9999'
-    tty: true
+    environment:
+      - POSTGRES_DATABASE=app
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=pass
