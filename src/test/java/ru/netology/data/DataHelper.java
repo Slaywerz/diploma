@@ -3,7 +3,10 @@ package ru.netology.data;
 import com.github.javafaker.Faker;
 import lombok.Value;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Random;
 
 public class DataHelper {
@@ -18,8 +21,8 @@ public class DataHelper {
     }
 
     private static String getYear() {
-        LocalDate localDate = LocalDate.now();
-        return String.format("%02d", localDate.getYear());
+        DateFormat dateFormat = new SimpleDateFormat("yy");
+        return dateFormat.format(Calendar.getInstance().getTime());
     }
 
     private static String getApprovedCard() {
