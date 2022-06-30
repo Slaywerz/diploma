@@ -1,6 +1,7 @@
 package ru.netology.data;
 
 import com.github.javafaker.Faker;
+import lombok.Value;
 
 import java.time.LocalDate;
 import java.util.Random;
@@ -33,5 +34,18 @@ public class DataHelper {
     private static String getName() {
     Faker faker = new Faker();
     return faker.name().firstName() + " " + faker.name().lastName();
+    }
+
+    @Value
+    public static class CardInfo {
+        private String cardNumber;
+        private String month;
+        private String year;
+        private String cardHolder;
+        private String cvcCode;
+    }
+
+    public static CardInfo validValues (){
+        return new CardInfo(getApprovedCard(), getMonth(), getYear(), getName(), getCVC());
     }
 }
