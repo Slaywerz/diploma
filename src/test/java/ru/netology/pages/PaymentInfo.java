@@ -6,6 +6,8 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 
+import java.time.Duration;
+
 public class PaymentInfo {
     private final SelenideElement cardNumber = Selenide.$("input[type='text'][placeholder='0000 0000 0000 0000']");
     private final SelenideElement monthValue = Selenide.$("input[type='text'][placeholder='08']");
@@ -20,13 +22,37 @@ public class PaymentInfo {
     private final SelenideElement invalidFormatNotification = Selenide.$(Selectors.byText("Неверный формат"));
     private final SelenideElement necessarilyFieldNotification = Selenide.$(Selectors.byText("Поле обязательно для заполнения"));
 
-    public SelenideElement validCard (DataHelper.CardInfo cardInfo) {
+    public void validFields(DataHelper.CardInfo cardInfo) {
         cardNumber.setValue(cardInfo.getCardNumber());
         monthValue.setValue(cardInfo.getMonth());
         yearValue.setValue(cardInfo.getYear());
         cardHolderName.setValue(cardInfo.getCardHolder());
         cvcCode.setValue(cardInfo.getCvcCode());
         continueButton.click();
-        return successNotification.shouldBe(Condition.visible);
+        successNotification.shouldBe(Condition.visible);
+    }
+
+    public void setSuccessNotification() {
+        successNotification.shouldBe(Condition.visible, Duration.ofSeconds(30));
+    }
+
+    public void setErrorNotification() {
+        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(30));
+    }
+
+    public void setInvalidMonthNotification() {
+        invalidMonthNotification.shouldBe(Condition.visible);
+    }
+
+    public void setInvalidYearNotification() {
+        invalidYearNotification.shouldBe(Condition.visible);
+    }
+
+    public void setInvalidFormatNotification() {
+        invalidFormatNotification.shouldBe(Condition.visible);
+    }
+
+    public void setNecessarilyFieldNotification() {
+        necessarilyFieldNotification.shouldBe(Condition.visible);
     }
 }
