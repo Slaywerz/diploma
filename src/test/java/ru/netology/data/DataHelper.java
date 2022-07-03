@@ -13,30 +13,70 @@ public class DataHelper {
     private DataHelper() {
     }
 
-
-    private static String getMonth() {
-        LocalDate localDate = LocalDate.now();
-        int month = localDate.getMonthValue();
-        return String.format("%02d", month);
-    }
-
-    private static String getYear() {
-        DateFormat dateFormat = new SimpleDateFormat("yy");
-        return dateFormat.format(Calendar.getInstance().getTime());
-    }
-
     private static String getApprovedCard() {
         return "4444 4444 4444 4441";
     }
 
-    private static String getCVC() {
-        Random random = new Random();
-        return String.format("%03d", random.nextInt(100 - 1));
+    private static String getDeclinedCard() {
+        return "4444 4444 4444 4442";
     }
 
+    private static String getErrorCard() {
+        return "4444 4444 0258 4236";
+    }
+
+    private static String getIncompleteCardNumber() {
+        return "4444 4444 4444";
+    }
+
+    private static String getMonth() {
+        LocalDate localDate = LocalDate.now();
+        return String.format("%02d", localDate.getMonthValue());
+    }
+
+    private static String getLastMonth() {
+        LocalDate localDate = LocalDate.now();
+        return String.format("%02d", localDate.minusMonths(1).getMonthValue());
+    }
+
+    private static String getYear() {
+        DateFormat df = new SimpleDateFormat("yy");
+        return df.format(Calendar.getInstance().getTime());
+    }
+
+    private static String getLastYear() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, -1);
+        DateFormat df = new SimpleDateFormat("yy");
+        return df.format(calendar.getTime());
+    }
+
+    private static final Faker faker = new Faker();
+
     private static String getName() {
-    Faker faker = new Faker();
-    return faker.name().firstName() + " " + faker.name().lastName();
+        return faker.name().firstName() + " " + faker.name().lastName();
+    }
+
+    private static String getNameWithoutSurname() {
+        return faker.name().firstName();
+    }
+
+    private static String getNameWithSymbols() {
+        return faker.name().firstName() + " " + faker.name().lastName() + "!";
+    }
+
+    private static String getNameFromNumber() {
+        return "12345 54321";
+    }
+
+    private static final Random random = new Random();
+
+    private static String getCvc() {
+        return String.format("%03d", random.nextInt(1000 - 1));
+    }
+
+    private static String getIncorrectCvc() {
+        return String.format("%02d", random.nextInt(100 - 1));
     }
 
     @Value
@@ -48,7 +88,43 @@ public class DataHelper {
         private String cvcCode;
     }
 
-    public static CardInfo validValues (){
-        return new CardInfo(getApprovedCard(), getMonth(), getYear(), getName(), getCVC());
+    public static CardInfo validValues() {
+        return new CardInfo(getApprovedCard(), getMonth(), getYear(), getName(), getCvc());
+    }
+
+    public static CardInfo declinedValues() {
+        return new CardInfo(getDeclinedCard(), getMonth(), getYear(), getName(), getCvc());
+    }
+
+    public static CardInfo errorCardValues() {
+        return new CardInfo(getErrorCard(), getMonth(), getYear(), getName(), getCvc());
+    }
+
+    public static CardInfo incompleteCardNumber() {
+        return new CardInfo(getIncompleteCardNumber(), getMonth(), getYear(), getName(), getCvc());
+    }
+
+    public static CardInfo nameWithSymbols() {
+        return new CardInfo(getApprovedCard(), getMonth(), getYear(), getNameWithSymbols(), getCvc());
+    }
+
+    public static CardInfo nameFromNumbers() {
+        return new CardInfo(getApprovedCard(), getMonth(), getYear(), getNameFromNumber(), getCvc());
+    }
+
+    public static CardInfo nameWithoutSurname() {
+        return new CardInfo(getDeclinedCard(), getMonth(), getYear(), getNameWithoutSurname(), getCvc());
+    }
+
+    public static CardInfo invalidMonthNumber() {
+        return new CardInfo(getDeclinedCard(), getLastMonth(), getYear(), getName(), getCvc());
+    }
+
+    public static CardInfo invalidYearNumber() {
+        return new CardInfo(getDeclinedCard(), getMonth(), getLastYear(), getName(), getCvc());
+    }
+
+    public static CardInfo invalidCvcNumber() {
+        return new CardInfo(getApprovedCard(), getMonth(), getYear(), getName(), getIncorrectCvc());
     }
 }
