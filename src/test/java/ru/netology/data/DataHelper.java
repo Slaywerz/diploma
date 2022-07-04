@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Random;
 
 public class DataHelper {
@@ -65,8 +66,9 @@ public class DataHelper {
         return faker.name().firstName() + " " + faker.name().lastName() + "!";
     }
 
-    private static String getNameFromNumber() {
-        return "12345 54321";
+    private static String getChineseName() {
+        Faker faker1 = new Faker(new Locale("CN"));
+        return faker1.name().firstName() + " " + faker1.name().lastName();
     }
 
     private static final Random random = new Random();
@@ -108,8 +110,16 @@ public class DataHelper {
         return new CardInfo(getApprovedCard(), getMonth(), getYear(), getNameWithSymbols(), getCvc());
     }
 
+    public static CardInfo chineseName() {
+        return new CardInfo(getApprovedCard(), getMonth(), getYear(), getChineseName(), getCvc());
+    }
+
+    private static CardInfo symbolName() {
+        return new CardInfo(getDeclinedCard(), getMonth(), getYear(), "!@$#$%# ()()()*?*?", getCvc());
+    }
+
     public static CardInfo nameFromNumbers() {
-        return new CardInfo(getApprovedCard(), getMonth(), getYear(), getNameFromNumber(), getCvc());
+        return new CardInfo(getApprovedCard(), getMonth(), getYear(), "12345 54321", getCvc());
     }
 
     public static CardInfo nameWithoutSurname() {
