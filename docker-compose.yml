@@ -8,7 +8,7 @@ services:
       - '9999:9999'
     command: npm start
 
-  mysqldb:
+  mysql:
     image: mysql:latest
     ports:
       - '3306:3306'
@@ -19,7 +19,7 @@ services:
       - MYSQL_PASSWORD=pass
 
 
-  postgresdb:
+  postgres:
     image: postgres:latest
     ports:
       - '5432:5432'
