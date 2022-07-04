@@ -1,9 +1,8 @@
 package ru.netology.database;
 
 import lombok.SneakyThrows;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -12,41 +11,65 @@ public class DatabaseHelper {
     static String user = System.getProperty("db.user");
     static String password = System.getProperty("db.password");
 
-    public static void CleanData() throws SQLException {
-        var runner = new QueryRunner();
-        try (
-                var conn = DriverManager.getConnection(url, user, password)) {
-            runner.update(conn, "DELETE FROM credit_request_entity");
-            runner.update(conn, "DELETE FROM order_entity");
-            runner.update(conn, "DELETE FROM payment_entity");
-        }
-    }
-
-    public static String getStatus(String query) throws SQLException {
-        var runner = new QueryRunner();
-        try (
-                var conn = DriverManager.getConnection(url, user, password)
-        ) {
-            return runner.query(conn, query, new ScalarHandler<String>());
-        }
-    }
-
     @SneakyThrows
-    public static Integer getSQLAmount() {
-        var runner = new QueryRunner();
-        try (var conn = DriverManager.getConnection(url, user, password)) {
-            var amount = "SELECT amount FROM payment_entity";
-            return runner.query(conn, amount, new ScalarHandler<>());
+    public static Connection getConnection() {
+        return DriverManager.getConnection(url, user, password);
+    }
+
+    public static String getId() throws SQLException {
+        String PaymentId = null;
+        var idSQL = "SELECT payment_id FROM order_entity order by created DESC limit 1";
+        try (var conn = getConnection();
+             var statusStmt = conn.prepareStatement(idSQL)) {
+            try (var rs = statusStmt.executeQuery()) {
+                if (rs.next()) {
+                    PaymentId = rs.getString("payment_id");
+                }
+            }
         }
+        return PaymentId;
     }
 
-    public static String getDebitStatus() throws SQLException {
-        var debitSQLStatus = "SELECT status FROM payment_entity";
-        return getStatus(debitSQLStatus);
+    public static String getCreditCardStatus(String paymentId) throws SQLException {
+        String creditCardStatus = null;
+        var statusSQL = "SELECT status FROM credit_request_entity where bank_id = ?";
+        try (var conn = getConnection();
+             var statusStmt = conn.prepareStatement(statusSQL)) {
+            try (var rs = statusStmt.executeQuery()) {
+                if (rs.next()) {
+                    creditCardStatus = rs.getString("status");
+                }
+            }
+        }
+        return creditCardStatus;
     }
 
-    public static String getCreditStatus() throws SQLException {
-        var creditSQLStatus = "SELECT status FROM credit_request_entity";
-        return getStatus(creditSQLStatus);
+    public static String getDebitCardStatus(String paymentId) throws SQLException {
+        String debitCardStatus = null;
+        var statusSQL = "SELECT status FROM payment_entity where transaction_id =?";
+        try (var conn = getConnection();
+             var statusStmt = conn.prepareStatement(statusSQL)) {
+            try (var rs = statusStmt.executeQuery()) {
+                if (rs.next()) {
+                    debitCardStatus = rs.getString("status");
+                }
+            }
+        }
+        return debitCardStatus;
+    }
+
+    public static Integer getSQLAmount(String paymentId) throws SQLException {
+        Integer amount = null;
+        var amountSQL = "SELECT amount FROM payment_entity WHERE transactions_id = ?";
+        try (var conn = getConnection();
+             var amountStmt = conn.prepareStatement(amountSQL)) {
+            amountStmt.setString(1, paymentId);
+            try (var rs = amountStmt.executeQuery()) {
+                if (rs.next()) {
+                    amount = rs.getInt("amount");
+                }
+            }
+        }
+        return amount;
     }
 }
