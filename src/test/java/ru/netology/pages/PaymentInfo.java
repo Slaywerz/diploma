@@ -32,11 +32,11 @@ public class PaymentInfo {
     }
 
     public void setSuccessNotification() {
-        successNotification.shouldBe(Condition.visible, Duration.ofSeconds(300));
+        successNotification.shouldBe(Condition.visible, Duration.ofSeconds(30));
     }
 
     public void setErrorNotification() {
-        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(300));
+        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(30));
     }
 
     public void setInvalidMonthNotification() {
