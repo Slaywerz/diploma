@@ -29,15 +29,14 @@ public class PaymentInfo {
         cardHolderName.setValue(cardInfo.getCardHolder());
         cvcCode.setValue(cardInfo.getCvcCode());
         continueButton.click();
-        successNotification.shouldBe(Condition.visible);
     }
 
     public void setSuccessNotification() {
-        successNotification.shouldBe(Condition.visible, Duration.ofSeconds(30));
+        successNotification.shouldBe(Condition.visible, Duration.ofSeconds(300));
     }
 
     public void setErrorNotification() {
-        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(30));
+        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(300));
     }
 
     public void setInvalidMonthNotification() {
@@ -54,5 +53,18 @@ public class PaymentInfo {
 
     public void setNecessarilyFieldNotification() {
         necessarilyFieldNotification.shouldBe(Condition.visible);
+    }
+
+    private static final String sumStart = "Всего ";
+    private static final String sumEnd = " 000 руб.!";
+
+    public Integer getTravelSum() {
+        SelenideElement travelSum = Selenide.$(Selectors.withText("руб."));
+        var text = travelSum.text();
+        var start = text.indexOf(sumStart);
+        var finish = text.indexOf(sumEnd);
+        var extractValueBelowSpace = text.substring(start + sumStart.length(), finish);
+        var value = Integer.parseInt(extractValueBelowSpace);
+        return value * 1000;
     }
 }
