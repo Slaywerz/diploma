@@ -61,4 +61,23 @@ public class Tests {
         paymentInfo.fields(DataHelper.declinedValues());
         paymentInfo.setErrorNotification();
     }
+    @Test
+    @DisplayName("Show error notification for error debit card number")
+    void shouldShowErrorNotificationForErrorDebitCardNumber() {
+        var paymentChoice = new PaymentChoice();
+        paymentChoice.debitPayment();
+        var paymentInfo = new PaymentInfo();
+        paymentInfo.fields(DataHelper.errorCardValues());
+        paymentInfo.setErrorNotification();
+    }
+
+    @Test
+    @DisplayName("Show error notification for error credit card number")
+    void shouldShowErrorNotificationForErrorCreditCardNumber() {
+        var paymentChoice = new PaymentChoice();
+        paymentChoice.creditPayment();
+        var paymentInfo = new PaymentInfo();
+        paymentInfo.fields(DataHelper.errorCardValues());
+        paymentInfo.setErrorNotification();
+    }
 }
