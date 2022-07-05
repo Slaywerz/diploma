@@ -22,7 +22,7 @@ public class PaymentInfo {
     private final SelenideElement invalidFormatNotification = Selenide.$(Selectors.byText("Неверный формат"));
     private final SelenideElement necessarilyFieldNotification = Selenide.$(Selectors.byText("Поле обязательно для заполнения"));
 
-    public void validFields(DataHelper.CardInfo cardInfo) {
+    public void fields(DataHelper.CardInfo cardInfo) {
         cardNumber.setValue(cardInfo.getCardNumber());
         monthValue.setValue(cardInfo.getMonth());
         yearValue.setValue(cardInfo.getYear());
@@ -39,16 +39,16 @@ public class PaymentInfo {
         errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(30));
     }
 
+    public void setInvalidFormatNotification() {
+        invalidFormatNotification.shouldBe(Condition.visible);
+    }
+
     public void setInvalidMonthNotification() {
         invalidMonthNotification.shouldBe(Condition.visible);
     }
 
     public void setInvalidYearNotification() {
         invalidYearNotification.shouldBe(Condition.visible);
-    }
-
-    public void setInvalidFormatNotification() {
-        invalidFormatNotification.shouldBe(Condition.visible);
     }
 
     public void setNecessarilyFieldNotification() {
