@@ -22,6 +22,7 @@ public class DataHelper {
         return "4444 4444 4444 4442";
     }
 
+//    Карта не должна проходить валидацию т.к. её нет в gate-simulator
     private static String getErrorCard() {
         return "4444 4444 0258 4236";
     }
@@ -66,6 +67,7 @@ public class DataHelper {
         return faker.name().firstName() + " " + faker.name().lastName() + "!";
     }
 
+    //    Т.к. имя должно быть написано на латинице, то добавляем метод, который генерирует имя на Китайском языке
     private static String getChineseName() {
         Faker faker1 = new Faker(new Locale("CN"));
         return faker1.name().firstName() + " " + faker1.name().lastName();
@@ -73,10 +75,12 @@ public class DataHelper {
 
     private static final Random random = new Random();
 
+    //    Рандомное трехзначное число
     private static String getCvc() {
         return String.format("%03d", random.nextInt(1000 - 1));
     }
 
+    //    Рандомное двухзначное число
     private static String getIncorrectCvc() {
         return String.format("%02d", random.nextInt(100 - 1));
     }
@@ -136,5 +140,26 @@ public class DataHelper {
 
     public static CardInfo invalidCvcNumber() {
         return new CardInfo(getApprovedCard(), getMonth(), getYear(), getName(), getIncorrectCvc());
+    }
+
+    //    Методы для отправки заявки с незаполненными полями
+    public static CardInfo emptyCardField() {
+        return new CardInfo(null, getMonth(), getYear(), getName(), getCvc());
+    }
+
+    public static CardInfo emptyMonthField() {
+        return new CardInfo(getDeclinedCard(), null, getYear(), getName(), getCvc());
+    }
+
+    public static CardInfo emptyYearField() {
+        return new CardInfo(getDeclinedCard(), getMonth(), null, getName(), getCvc());
+    }
+
+    public static CardInfo emptyNameField() {
+        return new CardInfo(getDeclinedCard(), getMonth(), getYear(), getName(), getCvc());
+    }
+
+    public static CardInfo emptyCvcField() {
+        return new CardInfo(getApprovedCard(), getMonth(), getYear(), getName(), null);
     }
 }
