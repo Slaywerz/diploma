@@ -22,7 +22,7 @@ public class DataHelper {
         return "4444 4444 4444 4442";
     }
 
-//    Карта не должна проходить валидацию т.к. её нет в gate-simulator
+    //    Карта не должна проходить валидацию т.к. её нет в gate-simulator
     private static String getErrorCard() {
         return "4444 4444 0258 4236";
     }
@@ -110,7 +110,15 @@ public class DataHelper {
         return new CardInfo(getIncompleteCardNumber(), getMonth(), getYear(), getName(), getCvc());
     }
 
-    public static CardInfo nameWithSymbols() {
+    public static CardInfo lastMonthNumber() {
+        return new CardInfo(getDeclinedCard(), getLastMonth(), getYear(), getName(), getCvc());
+    }
+
+    public static CardInfo lastYearNumber() {
+        return new CardInfo(getDeclinedCard(), getMonth(), getLastYear(), getName(), getCvc());
+    }
+
+    public static CardInfo nameWithSymbol() {
         return new CardInfo(getApprovedCard(), getMonth(), getYear(), getNameWithSymbols(), getCvc());
     }
 
@@ -118,24 +126,16 @@ public class DataHelper {
         return new CardInfo(getApprovedCard(), getMonth(), getYear(), getChineseName(), getCvc());
     }
 
-    private static CardInfo symbolName() {
+    public static CardInfo symbolicName() {
         return new CardInfo(getDeclinedCard(), getMonth(), getYear(), "!@$#$%# ()()()*?*?", getCvc());
     }
 
-    public static CardInfo nameFromNumbers() {
+    public static CardInfo numericName() {
         return new CardInfo(getApprovedCard(), getMonth(), getYear(), "12345 54321", getCvc());
     }
 
     public static CardInfo nameWithoutSurname() {
         return new CardInfo(getDeclinedCard(), getMonth(), getYear(), getNameWithoutSurname(), getCvc());
-    }
-
-    public static CardInfo invalidMonthNumber() {
-        return new CardInfo(getDeclinedCard(), getLastMonth(), getYear(), getName(), getCvc());
-    }
-
-    public static CardInfo invalidYearNumber() {
-        return new CardInfo(getDeclinedCard(), getMonth(), getLastYear(), getName(), getCvc());
     }
 
     public static CardInfo invalidCvcNumber() {
@@ -156,7 +156,7 @@ public class DataHelper {
     }
 
     public static CardInfo emptyNameField() {
-        return new CardInfo(getDeclinedCard(), getMonth(), getYear(), getName(), getCvc());
+        return new CardInfo(getDeclinedCard(), getMonth(), getYear(), null, getCvc());
     }
 
     public static CardInfo emptyCvcField() {
