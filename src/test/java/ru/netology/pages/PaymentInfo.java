@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
 import ru.netology.data.DataHelper;
 
 import java.time.Duration;
@@ -97,5 +98,13 @@ public class PaymentInfo {
         var extractHundredValue = text.substring(start1 + sumStartForHundred.length(), finish1);
         var hundredValue = Integer.parseInt(extractHundredValue);
         return thousandValue * 1000 + hundredValue;
+    }
+
+    public void clearFields() {
+        cardNumber.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
+        monthValue.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
+        yearValue.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
+        cardHolderName.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
+        cvcCode.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
     }
 }
