@@ -80,22 +80,22 @@ public class PaymentInfo {
         necessarilyFieldNotification.shouldBe(Condition.visible);
     }
 
-    private static final String sumStart = "Всего ";
-    private static final String sumEndsStart = "Всего 45 ";
-    private static final String stringEnd = " 000 руб.!";
-    private static final String sumEnd = " руб.!";
+    private static final String sumStartForThousand = "Всего ";
+    private static final String sumStartForHundred = "Всего 45 ";
+    private static final String sumEndForThousand = " 000 руб.!";
+    private static final String sumEndForHundred = " руб.!";
 
     public Integer getTravelSum() {
         SelenideElement travelSum = Selenide.$(Selectors.withText("руб."));
         var text = travelSum.text();
-        var start = text.indexOf(sumStart);
-        var finish = text.indexOf(stringEnd);
-        var extractValueBelowSpace = text.substring(start + sumStart.length(), finish);
-        var value = Integer.parseInt(extractValueBelowSpace);
-        var start1 = text.indexOf(sumEndsStart);
-        var finish1 = text.indexOf(sumEnd);
-        var extractEndValueBelowSpace = text.substring(start1 + sumEndsStart.length(), finish1);
-        var value1 = Integer.parseInt(extractEndValueBelowSpace);
-        return value * 1000 + value1;
+        var start = text.indexOf(sumStartForThousand);
+        var finish = text.indexOf(sumEndForThousand);
+        var extractThousandValue = text.substring(start + sumStartForThousand.length(), finish);
+        var thousandValue = Integer.parseInt(extractThousandValue);
+        var start1 = text.indexOf(sumStartForHundred);
+        var finish1 = text.indexOf(sumEndForHundred);
+        var extractHundredValue = text.substring(start1 + sumStartForHundred.length(), finish1);
+        var hundredValue = Integer.parseInt(extractHundredValue);
+        return thousandValue * 1000 + hundredValue;
     }
 }
