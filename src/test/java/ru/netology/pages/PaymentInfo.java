@@ -81,15 +81,21 @@ public class PaymentInfo {
     }
 
     private static final String sumStart = "Всего ";
-    private static final String sumEnd = " 000 руб.!";
+    private static final String sumEndsStart = "Всего 45 ";
+    private static final String stringEnd = " 000 руб.!";
+    private static final String sumEnd = " руб.!";
 
     public Integer getTravelSum() {
         SelenideElement travelSum = Selenide.$(Selectors.withText("руб."));
         var text = travelSum.text();
         var start = text.indexOf(sumStart);
-        var finish = text.indexOf(sumEnd);
+        var finish = text.indexOf(stringEnd);
         var extractValueBelowSpace = text.substring(start + sumStart.length(), finish);
         var value = Integer.parseInt(extractValueBelowSpace);
-        return value * 1000;
+        var start1 = text.indexOf(sumEndsStart);
+        var finish1 = text.indexOf(sumEnd);
+        var extractEndValueBelowSpace = text.substring(start1 + sumEndsStart.length(), finish1);
+        var value1 = Integer.parseInt(extractEndValueBelowSpace);
+        return value * 1000 + value1;
     }
 }
