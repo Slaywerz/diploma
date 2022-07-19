@@ -82,6 +82,22 @@ public class DatabaseHelper {
         return creditId;
     }
 
+    public static String getTimeInPaymentEntity(String paymentId) throws SQLException {
+        String time = null;
+        var timeSQL = "SELECT created FROM payment_entity WHERE transaction_id = ?";
+        try (var conn = getConnection();
+             var timeStmt = conn.prepareStatement(timeSQL)) {
+            timeStmt.setString(1, paymentId);
+            try (var rs = timeStmt.executeQuery()) {
+                if (rs.next()) {
+                    time = rs.getString("created");
+                }
+            }
+        }
+        int limit = 26;
+        return time.substring(0, 16);
+    }
+
     public static Integer getSQLAmount(String paymentId) throws SQLException {
         Integer amount = null;
         var amountSQL = "SELECT amount FROM payment_entity WHERE transaction_id = ?";
