@@ -61,6 +61,14 @@ public class PaymentInfo {
         successNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
+    public void setHiddenSuccessNotification() {
+        successNotification.shouldBe(Condition.hidden);
+    }
+
+    public void setHiddenErrorNotification() {
+        errorNotification.shouldBe(Condition.hidden);
+    }
+
     public void setErrorNotification() {
         errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
