@@ -66,38 +66,6 @@ public class DatabaseHelper {
         return debitCardStatus;
     }
 
-    public static String getCreditId(String paymentId) throws SQLException {
-        String creditId = null;
-        var creditIdSQL = "SELECT credit_id FROM order_entity WHERE payment_id = ?";
-        try (var conn = getConnection();
-             var paymentIdStmt = conn.prepareStatement(creditIdSQL)) {
-            paymentIdStmt.setString(1, paymentId);
-            try (var rs = paymentIdStmt.executeQuery()) {
-                if (rs.next()) {
-                    creditId = rs.getString("credit_id");
-                }
-
-            }
-        }
-        return creditId;
-    }
-
-    public static String getTimeInPaymentEntity(String paymentId) throws SQLException {
-        String time = null;
-        var timeSQL = "SELECT created FROM payment_entity WHERE transaction_id = ?";
-        try (var conn = getConnection();
-             var timeStmt = conn.prepareStatement(timeSQL)) {
-            timeStmt.setString(1, paymentId);
-            try (var rs = timeStmt.executeQuery()) {
-                if (rs.next()) {
-                    time = rs.getString("created");
-                }
-            }
-        }
-        int limit = 26;
-        return time.substring(0, 16);
-    }
-
     public static Integer getSQLAmount(String paymentId) throws SQLException {
         Integer amount = null;
         var amountSQL = "SELECT amount FROM payment_entity WHERE transaction_id = ?";
@@ -111,5 +79,115 @@ public class DatabaseHelper {
             }
         }
         return amount;
+    }
+
+    public static String getKeyIdInOrderEntity(String paymentId) throws SQLException {
+        String orderEntityId = null;
+        var orderEntityIdSQL = "SELECT id FROM order_entity WHERE payment_id = ?";
+        try (var conn = getConnection();
+             var idStmt = conn.prepareStatement(orderEntityIdSQL)) {
+            idStmt.setString(1, paymentId);
+            try (var rs = idStmt.executeQuery()) {
+                if (rs.next()) {
+                    orderEntityId = rs.getString("id");
+                }
+            }
+        }
+        return orderEntityId;
+    }
+
+    public static String getCreditId(String paymentId) throws SQLException {
+        String creditId = null;
+        var idSQL = "SELECT credit_id FROM order_entity WHERE payment_id = ?";
+        try (var conn = getConnection();
+             var paymentIdStmt = conn.prepareStatement(idSQL)) {
+            paymentIdStmt.setString(1, paymentId);
+            try (var rs = paymentIdStmt.executeQuery()) {
+                if (rs.next()) {
+                    creditId = rs.getString("credit_id");
+                }
+
+            }
+        }
+        return creditId;
+    }
+
+    public static String getTimeInPaymentEntity(String paymentId) throws SQLException {
+        String time = null;
+        var timeSQL = "SELECT created FROM order_entity WHERE payment_id = ?";
+        try (var conn = getConnection();
+             var timeStmt = conn.prepareStatement(timeSQL)) {
+            timeStmt.setString(1, paymentId);
+            try (var rs = timeStmt.executeQuery()) {
+                if (rs.next()) {
+                    time = rs.getString("created");
+                }
+            }
+        }
+        int limit = 16;
+        assert time != null;
+        return time.length() > limit ? time.substring(0, limit) : time;
+    }
+
+    public static String getKeyIdInCreditEntity(String paymentId) throws SQLException {
+        String keyIdCreditEntity = null;
+        var idSQL = "SELECT id FROM credit_request_entity WHERE bank_id = ?";
+        try (var conn = getConnection();
+             var idStmt = conn.prepareStatement(idSQL)) {
+            idStmt.setString(1, paymentId);
+            try (var rs = idStmt.executeQuery()) {
+                if (rs.next()) {
+                    keyIdCreditEntity = rs.getString("id");
+                }
+            }
+        }
+        return keyIdCreditEntity;
+    }
+
+    public static String getCreatedInCreditEntity(String paymentId) throws SQLException {
+        String time = null;
+        var timeSQL = "SELECT created FROM credit_request_entity WHERE bank_id = ?";
+        try (var conn = getConnection();
+             var timeStmt = conn.prepareStatement(timeSQL)) {
+            timeStmt.setString(1, paymentId);
+            try (var rs = timeStmt.executeQuery()) {
+                if (rs.next()) {
+                    time = rs.getString("id");
+                }
+            }
+        }
+        int limit = 16;
+        assert time != null;
+        return time.length() > limit ? time.substring(0, limit) : time;
+    }
+
+    public static String getKeyIdInPaymentEntity(String paymentId) throws SQLException {
+        String keyIdPaymentEntity = null;
+        var idSQL = "SELECT id FROM payment_entity WHERE transaction_id = ?";
+        try (var conn = getConnection();
+             var idStmt = conn.prepareStatement(idSQL)) {
+            idStmt.setString(1, paymentId);
+            try (var rs = idStmt.executeQuery()) {
+                if (rs.next()) {
+                    keyIdPaymentEntity = rs.getString("id");
+                }
+            }
+        }
+        return keyIdPaymentEntity;
+    }
+
+    public static String getCreatedTimeInPaymentEntity(String paymentId) throws SQLException {
+        String time = null;
+        var timeSQL = "SELECT created FROM payment_entity WHERE transaction_id = ?";
+        try (var conn = getConnection();
+             var timeStmt = conn.prepareStatement(timeSQL)) {
+            timeStmt.setString(1, paymentId);
+            try (var rs = timeStmt.executeQuery()) {
+                if (rs.next()) {
+                    time = rs.getString("created");
+                }
+            }
+        }
+        return time;
     }
 }
