@@ -169,4 +169,12 @@ public class DataHelper {
     public static CardInfo emptyCvcField() {
         return new CardInfo(getApprovedCard(), getMonth(), getYear(), getName(), null);
     }
+
+    public static CardInfo zeroMonth() {
+        return new CardInfo(getApprovedCard(), "00", getYear(), getName(), getCvc());
+    }
+
+    public static CardInfo zeroYear (){
+        return new CardInfo(getApprovedCard(), getMonth(), "00", getName(), getCvc());
+    }
 }
