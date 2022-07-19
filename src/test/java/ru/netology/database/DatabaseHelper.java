@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DatabaseHelper {
     static String url = "jdbc:mysql://localhost:3306/app";
-//    static String url = "jdbc:postgresql://localhost:5432/app";
+    //    static String url = "jdbc:postgresql://localhost:5432/app";
     static String user = "app";
     static String password = "pass";
 
@@ -64,6 +64,22 @@ public class DatabaseHelper {
             }
         }
         return debitCardStatus;
+    }
+
+    public static String getCreditId(String paymentId) throws SQLException {
+        String creditId = null;
+        var creditIdSQL = "SELECT credit_id FROM order_entity WHERE payment_id = ?";
+        try (var conn = getConnection();
+             var paymentIdStmt = conn.prepareStatement(creditIdSQL)) {
+            paymentIdStmt.setString(1, paymentId);
+            try (var rs = paymentIdStmt.executeQuery()) {
+                if (rs.next()) {
+                    creditId = rs.getString("credit_id");
+                }
+
+            }
+        }
+        return creditId;
     }
 
     public static Integer getSQLAmount(String paymentId) throws SQLException {
