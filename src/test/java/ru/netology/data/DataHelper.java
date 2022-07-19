@@ -56,7 +56,7 @@ public class DataHelper {
 
     public static String getNowTime() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        df.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
+        df.setTimeZone(TimeZone.getTimeZone("UCT"));
         return df.format(Calendar.getInstance().getTime());
     }
 
