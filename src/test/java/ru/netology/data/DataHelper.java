@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class DataHelper {
     private DataHelper() {
@@ -51,6 +52,12 @@ public class DataHelper {
         calendar.add(Calendar.YEAR, -1);
         DateFormat df = new SimpleDateFormat("yy");
         return df.format(calendar.getTime());
+    }
+
+    public static String getNowTime() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        df.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
+        return df.format(Calendar.getInstance().getTime());
     }
 
     private static final Faker faker = new Faker();
