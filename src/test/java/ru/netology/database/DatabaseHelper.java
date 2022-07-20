@@ -112,7 +112,7 @@ public class DatabaseHelper {
         return creditId;
     }
 
-    public static String getTimeInPaymentEntity(String paymentId) throws SQLException {
+    public static String getCreatedTimeInOrderEntity(String paymentId) throws SQLException {
         String time = null;
         var timeSQL = "SELECT created FROM order_entity WHERE payment_id = ?";
         try (var conn = getConnection();
@@ -124,7 +124,7 @@ public class DatabaseHelper {
                 }
             }
         }
-        int limit = 16;
+        int limit = 13;
         assert time != null;
         return time.length() > limit ? time.substring(0, limit) : time;
     }
@@ -144,7 +144,7 @@ public class DatabaseHelper {
         return keyIdCreditEntity;
     }
 
-    public static String getCreatedInCreditEntity(String paymentId) throws SQLException {
+    public static String getCreatedTimeInCreditEntity(String paymentId) throws SQLException {
         String time = null;
         var timeSQL = "SELECT created FROM credit_request_entity WHERE bank_id = ?";
         try (var conn = getConnection();
@@ -152,11 +152,11 @@ public class DatabaseHelper {
             timeStmt.setString(1, paymentId);
             try (var rs = timeStmt.executeQuery()) {
                 if (rs.next()) {
-                    time = rs.getString("id");
+                    time = rs.getString("created");
                 }
             }
         }
-        int limit = 16;
+        int limit = 13;
         assert time != null;
         return time.length() > limit ? time.substring(0, limit) : time;
     }
@@ -188,6 +188,8 @@ public class DatabaseHelper {
                 }
             }
         }
-        return time;
+        int limit = 13;
+        assert time != null;
+        return time.length() > limit ? time.substring(0, limit) : time;
     }
 }
