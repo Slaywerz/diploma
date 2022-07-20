@@ -28,10 +28,10 @@
 ## Шаги для запуска приложения:
 1. Запустить Docker Desktop;
 2. Скачать данный репозиторий командой:
-```git clone https://github.com/Slaywerz/diploma.git```
+```git clone https://github.com/Slaywerz/diploma.git```;
 3. Запустить IntelliJ IDEA и открыть через неё репозиторий;
 4. Запустить файл __*docker-compose.yml*__ командой:
-```docker-compose up -d```
+```docker-compose up -d```;
 6. Раскомментировать строку с необходимой БД в [__*DatabaseHelper*__](./src/test/java/ru/netology/database/DatabaseHelper.java);
 7. Запустить приложение командой, в зависимости от выбранной БД. 
 #### для DB MySQL
