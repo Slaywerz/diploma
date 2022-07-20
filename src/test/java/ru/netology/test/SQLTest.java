@@ -1,11 +1,10 @@
 package ru.netology.test;
 
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
 import ru.netology.database.DatabaseHelper;
 import ru.netology.pages.PaymentChoice;
@@ -13,9 +12,19 @@ import ru.netology.pages.PaymentInfo;
 
 public class SQLTest {
 
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
     @BeforeEach
     void setUp() {
         Selenide.open("http://localhost:8080/");
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
     }
 
     @SneakyThrows
