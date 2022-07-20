@@ -34,6 +34,7 @@
 4. Запустить файл __*docker-compose.yml*__ командой:
 
 ```docker-compose up -d```
+
 6. Раскомментировать строку с необходимой БД в [__*DatabaseHelper*__](./src/test/java/ru/netology/database/DatabaseHelper.java);
 7. Запустить приложение командой, в зависимости от выбранной БД. 
 #### для DB MySQL
