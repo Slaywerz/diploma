@@ -10,6 +10,7 @@ import ru.netology.pages.PaymentInfo;
 
 
 public class CardTest {
+
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
