@@ -54,8 +54,8 @@ public class DataHelper {
         return df.format(calendar.getTime());
     }
 
-    public static String getNowTime() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static String getUctTimeNow() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH");
         df.setTimeZone(TimeZone.getTimeZone("UCT"));
         return df.format(Calendar.getInstance().getTime());
     }
@@ -174,7 +174,7 @@ public class DataHelper {
         return new CardInfo(getApprovedCard(), "00", getYear(), getName(), getCvc());
     }
 
-    public static CardInfo zeroYear (){
+    public static CardInfo zeroYear() {
         return new CardInfo(getApprovedCard(), getMonth(), "00", getName(), getCvc());
     }
 }
