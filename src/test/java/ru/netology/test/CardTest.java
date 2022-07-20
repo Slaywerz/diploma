@@ -1,10 +1,9 @@
 package ru.netology.test;
 
 import com.codeborne.selenide.Selenide;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
 import ru.netology.pages.PaymentChoice;
 import ru.netology.pages.PaymentInfo;
@@ -15,11 +14,6 @@ public class CardTest {
     @BeforeEach
     void setUp() {
         Selenide.open("http://localhost:8080/");
-    }
-
-    @AfterEach
-    void showDown() {
-        Selenide.closeWindow();
     }
 
     @Test
@@ -220,6 +214,26 @@ public class CardTest {
         var paymentInfo = new PaymentInfo();
         paymentInfo.fields(DataHelper.emptyCvcField());
         paymentInfo.setInvalidFormatNotification();
+    }
+
+    @Test
+    @DisplayName("Error notification field for zero month")
+    void shouldBeErrorNotificationForZeroMonth() {
+        var paymentChoice = new PaymentChoice();
+        paymentChoice.debitPayment();
+        var paymentInfo = new PaymentInfo();
+        paymentInfo.fields(DataHelper.zeroMonth());
+        paymentInfo.setInvalidMonthNotification();
+    }
+
+    @Test
+    @DisplayName("Error notification field for zero year")
+    void shouldBeErrorNotificationForZeroYear() {
+        var paymentChoice = new PaymentChoice();
+        paymentChoice.debitPayment();
+        var paymentInfo = new PaymentInfo();
+        paymentInfo.fields(DataHelper.zeroYear());
+        paymentInfo.setInvalidYearNotification();
     }
 
     @Test
