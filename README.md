@@ -1,20 +1,61 @@
-# Описание проекта
-В данном проекте происходит тестирование комплексного сервиса, взаимодействующего с СУБД и API банка
-## Что потребуется для запуска тестов:
-* Установить актуальную версию [__*IntelliJ IDEA*__](https://www.jetbrains.com/ru-ru/idea/)
-* Установить [__*git*__](https://git-scm.com/)
-* Установить плагин __*Docker*__ для IntelliJ IDEA
-* Установить [__*AdoptOpenJDK 11*__](https://adoptopenjdk.net/)
-* Установить [__*Docker Desktop*__](https://www.docker.com/products/docker-desktop)
-## Шаги для запуска тестов:
-1. Запустить Docker Desktop
-2. Скачать данный репозиторий командой: __*git clone*__
-3. Запустить IntelliJ IDEA и открыть через неё репозиторий
-4. Запустить файл __*docker-compose.yml*__ командой: __*"docker-compose up -d"*__
-5. Запустить приложение командой 
-#### для DB MySQL
-__*java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar*__
-#### для DB PostgreSQL
-__*java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar*__
-## Отчетная документация
+# Дипломный проект по профессии «Тестировщик ПО»
+Проект представляет собой автоматизацию тестирования комплексного сервиса, взаимодействующего с СУБД и API Банка.
+## Документация
 1. [План автоматизации тестирования](./documentation/Plan.md)
+
+## Описание приложения
+### Бизнес часть
+Приложение представляет из себя веб-сервис.
+![](https://raw.githubusercontent.com/netology-code/qa-diploma/master/pic/service.png)
+Приложение предлагает купить тур по определённой цене с помощью двух способов:
+
+1. Обычная оплата по дебетовой карте
+2. Уникальная технология: выдача кредита по данным банковской карты
+
+Само приложение не обрабатывает данные по картам, а пересылает их банковским сервисам:
+* сервису платежей Payment Gate;
+* кредитному сервису Credit Gate.
+
+Приложение должно в собственной СУБД сохранять информацию о том, каким способом был совершён платёж и успешно ли он был совершён (при этом данные карт сохранять не допускается).
+### Техническая часть
+Само приложение расположено в файле [__*aqa-shop.jar*__](./artifacts/aqa-shop.jar) и запускается на порту __*8080*__.
+## Что потребуется для запуска тестов:
+* Установить актуальную версию [__*IntelliJ IDEA*__](https://www.jetbrains.com/ru-ru/idea/);
+* Установить [__*git*__](https://git-scm.com/);
+* Установить плагин __*Docker*__ для IntelliJ IDEA;
+* Установить [__*AdoptOpenJDK 11*__](https://adoptopenjdk.net/);
+* Установить [__*Docker Desktop*__](https://www.docker.com/products/docker-desktop).
+## Шаги для запуска приложения:
+1. Запустить Docker Desktop;
+2. Скачать данный репозиторий командой:
+
+```git clone https://github.com/Slaywerz/diploma.git```
+3. Запустить IntelliJ IDEA и открыть через неё репозиторий;
+4. Запустить файл __*docker-compose.yml*__ командой:
+
+```docker-compose up -d```
+6. Раскомментировать строку с необходимой БД в [__*DatabaseHelper*__](./src/test/java/ru/netology/database/DatabaseHelper.java);
+7. Запустить приложение командой, в зависимости от выбранной БД. 
+#### для DB MySQL
+```
+java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar
+```
+#### для DB PostgresSQL
+```
+java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar*__
+```
+## Запуск тестов
+Во вкладке терминала ввести команду:
+
+```.\gradlew clean test```.
+
+## Перезапуск приложения и тестов
+Если необходимо перезапустить приложение и/или тесты (например, для другой БД), необходимо выполнить остановку работы в запущенных ранее вкладках терминала, нажав в них Ctrl+С.
+
+## Формирование отчета AllureReport по результатам тестирования
+В новой вкладке терминала или нажав двойной Ctrl ввести команду:
+```
+./gradlew allureServe
+```
+
+Сгенерированный отчет откроется в браузере автоматически. После просмотра и закрытия отчета можно остановить работу команды, нажав Ctrl+С или закрыть вкладку Run и нажать Disconnect.
