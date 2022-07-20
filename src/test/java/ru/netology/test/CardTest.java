@@ -221,4 +221,32 @@ public class CardTest {
         paymentInfo.fields(DataHelper.emptyCvcField());
         paymentInfo.setInvalidFormatNotification();
     }
+
+    @Test
+    @DisplayName("Hiding previous success notification")
+    void shouldHiddenPreviousNotification() {
+        var paymentChoice = new PaymentChoice();
+        paymentChoice.creditPayment();
+        var paymentInfo = new PaymentInfo();
+        paymentInfo.fields(DataHelper.validValues());
+        paymentInfo.setSuccessNotification();
+        paymentInfo.clearFields();
+        paymentInfo.fields(DataHelper.errorCardValues());
+        paymentInfo.setErrorNotification();
+        paymentInfo.setHiddenSuccessNotification();
+    }
+
+    @Test
+    @DisplayName("Hiding previous error notification")
+    void shouldHiddenPreviousErrorNotification() {
+        var paymentChoice = new PaymentChoice();
+        paymentChoice.debitPayment();
+        var paymentInfo = new PaymentInfo();
+        paymentInfo.fields(DataHelper.errorCardValues());
+        paymentInfo.setErrorNotification();
+        paymentInfo.clearFields();
+        paymentInfo.fields(DataHelper.validValues());
+        paymentInfo.setSuccessNotification();
+        paymentInfo.setHiddenErrorNotification();
+    }
 }
