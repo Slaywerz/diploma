@@ -40,7 +40,7 @@ java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aq
 ```
 #### для DB PostgresSQL
 ```
-java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar*__
+java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
 ```
 ## Запуск тестов
 Во вкладке терминала ввести команду:
