@@ -2,7 +2,7 @@ version: '3.7'
 services:
   node:
     build: artifacts/gate-simulator
-    image: node-app:1.0
+    image: node:latest
     container_name: node
     ports:
       - '9999:9999'
