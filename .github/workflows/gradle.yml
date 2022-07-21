@@ -19,11 +19,9 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
-      # need checkout before using compose-action
-      - uses: isbang/compose-action@v1.1.0
-        with:
-          compose-file: "./docker-compose.yml"
-          down-flags: "--volumes"
+    - uses: actions/checkout@v1
+    - name: Build the docker-compose stack
+      run: docker-compose up -d
     - name: Run SUT
       run: java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
     - name: Grant execute permission for gradlew
