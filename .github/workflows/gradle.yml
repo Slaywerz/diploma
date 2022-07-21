@@ -19,13 +19,12 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         cache: gradle
-    - name: docker-compose
-      uses: pennsignals/publish_docker-compose@v0.1.0
-      with:
-        version: '0.2.6-rc.1' # optional
-        docker_compose: 'docker-compose.build.yml' # required
-    - name: Build the stack
-      run: docker-compose up -d
+      # need checkout before using compose-action
+      - uses: actions/checkout@v3
+      - uses: isbang/compose-action@v1.1.0
+        with:
+          compose-file: "./docker-compose.yml"
+          down-flags: "--volumes"
     - name: Run SUT
       run: java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
     - name: Grant execute permission for gradlew
