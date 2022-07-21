@@ -28,7 +28,7 @@ jobs:
     - name: docker-compose-p
       run: sudo chmod +x /usr/local/bin/docker-compose
     - name: docker-compose-up
-      run: docker-compose up --build -d
+      run: docker-compose up -d
     - name: sleep 
       run: sleep 15
     - name: docker ps
