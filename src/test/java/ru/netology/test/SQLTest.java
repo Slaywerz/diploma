@@ -115,7 +115,7 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
-    @DisplayName("Time in order_entity matched with UTC")
+    @DisplayName("Time in order_entity matched with Moscow")
     void shouldBeMatchedTimeInDb() {
         var paymentChoice = new PaymentChoice();
         paymentChoice.debitPayment();
@@ -139,8 +139,8 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
-    @DisplayName("Time in table credit_request_entity matched with UTC")
-    void shouldBeMatchedTimeWithUtcInCreditEntity() {
+    @DisplayName("Time in table credit_request_entity matched with Moscow")
+    void shouldBeMatchedTimeWithMoscowInCreditEntity() {
         var paymentChoice = new PaymentChoice();
         paymentChoice.creditPayment();
         var paymentInfo = new PaymentInfo();
@@ -163,8 +163,8 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
-    @DisplayName("Time matched with UTC in payment_entity table")
-    void shouldBeMatchedTimeWithUtcInPaymentEntity() {
+    @DisplayName("Time matched with Moscow in payment_entity table")
+    void shouldBeMatchedTimeWithMoscowInPaymentEntity() {
         var paymentChoice = new PaymentChoice();
         paymentChoice.debitPayment();
         var paymentInfo = new PaymentInfo();
