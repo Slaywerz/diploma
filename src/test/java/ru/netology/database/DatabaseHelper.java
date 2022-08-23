@@ -1,21 +1,18 @@
 package ru.netology.database;
 
 import lombok.SneakyThrows;
+import org.apache.commons.dbutils.QueryRunner;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseHelper {
-//    static String url = "jdbc:mysql://localhost:3306/app";
-        static String url = "jdbc:postgresql://localhost:5432/app";
-    static String user = "app";
-    static String password = "pass";
 
     //    Создаем connection к БД
     @SneakyThrows
     public static Connection getConnection() {
-        return DriverManager.getConnection(url, user, password);
+        return DriverManager.getConnection(System.getProperty("dbUrl"), "app", "pass");
     }
 
     //    Получаем ID из таблицы order_entity
@@ -191,5 +188,17 @@ public class DatabaseHelper {
         int limit = 13;
         assert time != null;
         return time.length() > limit ? time.substring(0, limit) : time;
+    }
+
+    public static void clearDb() throws SQLException {
+        var deleteOrderEntity = "DELETE fROM order_entity";
+        var deletePaymentEntity = "DELETE FROM payment_entity";
+        var deleteCreditRequestEntity = "DELETE FROM credit_request_entity";
+        var runner = new QueryRunner();
+        try (var conn = getConnection()) {
+            runner.update(conn, deleteOrderEntity);
+            runner.update(conn, deletePaymentEntity);
+            runner.update(conn, deleteCreditRequestEntity);
+        }
     }
 }
