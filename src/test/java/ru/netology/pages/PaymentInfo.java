@@ -51,7 +51,7 @@ public class PaymentInfo {
         cvcCode.setValue(cardInfo.getCvcCode());
         continueButton.click();
         try {
-            Thread.sleep(10000);
+            Thread.sleep(8000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
