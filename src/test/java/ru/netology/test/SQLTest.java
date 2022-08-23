@@ -2,6 +2,8 @@ package ru.netology.test;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.*;
@@ -12,9 +14,11 @@ import ru.netology.pages.PaymentInfo;
 
 public class SQLTest {
 
+    @SneakyThrows
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
+        DatabaseHelper.clearDb();
     }
 
     @BeforeEach
@@ -29,6 +33,7 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Approved status for valid credit card")
     void shouldBeApprovedStatusForCreditCardInDb() {
         var paymentChoice = new PaymentChoice();
@@ -42,6 +47,7 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Approved status for valid debit card")
     void shouldBeApprovedStatusForDebitCardInDb() {
         var paymentChoice = new PaymentChoice();
@@ -54,6 +60,7 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Decline status for reject credit card")
     void shouldBeDeclineStatusForRejectCreditCard() {
         var paymentChoice = new PaymentChoice();
@@ -66,6 +73,7 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Decline status for reject debit card")
     void shouldBeDeclineStatusForRejectDebitCard() {
         var paymentChoice = new PaymentChoice();
@@ -78,6 +86,7 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Tour sum in db coincidence with the page sum")
     void shouldBeCoincidenceSum() {
         var paymentChoice = new PaymentChoice();
@@ -90,6 +99,7 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Key ID in order_entity is not null")
     void shouldNotNullKeyIdInOrderEntity() {
         var paymentChoice = new PaymentChoice();
@@ -102,6 +112,7 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Credit_id in order_entity is not null")
     void shouldNotNullCreditIdInOrderEntity() {
         var paymentChoice = new PaymentChoice();
@@ -115,7 +126,8 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
-    @DisplayName("Time in order_entity matched with Moscow")
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Time in order_entity matched with PC")
     void shouldBeMatchedTimeInDb() {
         var paymentChoice = new PaymentChoice();
         paymentChoice.debitPayment();
@@ -127,6 +139,7 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("ID column in table credit_request_entity is not null")
     void shouldNotBeNullKeyIdInCreditEntityTable() {
         var paymentChoice = new PaymentChoice();
@@ -139,8 +152,9 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
-    @DisplayName("Time in table credit_request_entity matched with Moscow")
-    void shouldBeMatchedTimeWithMoscowInCreditEntity() {
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Time in table credit_request_entity matched with PC")
+    void shouldBeMatchedTimeWithPCInCreditEntity() {
         var paymentChoice = new PaymentChoice();
         paymentChoice.creditPayment();
         var paymentInfo = new PaymentInfo();
@@ -151,6 +165,7 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("ID column in table payment_entity is not null")
     void shouldNotBeNullIdColumnInPaymentEntityTable() {
         var paymentChoice = new PaymentChoice();
@@ -163,8 +178,9 @@ public class SQLTest {
 
     @SneakyThrows
     @Test
-    @DisplayName("Time matched with Moscow in payment_entity table")
-    void shouldBeMatchedTimeWithMoscowInPaymentEntity() {
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Time matched with PC in payment_entity table")
+    void shouldBeMatchedTimeWithPCInPaymentEntity() {
         var paymentChoice = new PaymentChoice();
         paymentChoice.debitPayment();
         var paymentInfo = new PaymentInfo();
